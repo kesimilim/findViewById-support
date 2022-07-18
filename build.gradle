@@ -1,74 +1,33 @@
-//plugins {
-//    id 'org.jetbrains.intellij' version '0.3.10'
-//}
-
-buildscript {
-    repositories {
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        maven {
-            url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'
-        }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-        maven {
-            url 'https://dl.google.com/dl/android/maven2'
-        }
-        jcenter()
-        mavenCentral()
-        google()
-    }
-
-    dependencies {
-        classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.3.10"
-    }
+plugins {
+    id 'idea'
+    id 'org.jetbrains.intellij' version "0.5.0"
+    id 'java'
 }
 
 repositories {
-    jcenter()
     mavenCentral()
     google()
 }
 
-apply plugin: 'idea'
-apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-dependencies {
-
-}
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 group = 'com.zxy.idea.plugin'
-version = '1.6'
+version = '1.7'
 
 intellij {
     pluginName = 'Android FindViewById Support'
-    //https://www.jetbrains.com/intellij-repository/releases
     it.version = null
-    //version = '2018.1.1'
-    plugins = ['android', 'gradle', 'Groovy']
-    type = "AI"
-    //for as local,intelliJ IDEA version is not recommended.
-    localPath = "/Applications/Android Studio.app"
+    version = '202.8194.7'
+    plugins = ['android', 'java', 'gradle', 'Groovy' ]
     updateSinceUntilBuild = false
-    sameSinceUntilBuild = false
-    sandboxDirectory = "${project.buildDir}/idea-sandbox"
     alternativeIdePath = "/Applications/Android Studio.app"
 }
 
 patchPluginXml {
-    //https://plugins.jetbrains.com/plugin/YOUR_PLUGIN_ID
     pluginId = "com.zxy.idea.plugin.findViewById-support"
     it.version = "${project.version}"
-    //AI-171 for AS-3.0，AI-173 for AS-3.1
-    sinceBuild = "AI-171"
-    //Product ID-Branch number-Build number in the branch，see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html
-    //untilBuild = "AI-181"
+    sinceBuild = '173'
     pluginDescription = "Generate findViewById code automatic. Support Java and Kotlin." + "<br/>" +
             "<img src=\'https://raw.githubusercontent.com/Sunzxyong/findViewById-support/master/findviewbyid.jpg\' width=\'400\' height=\'272\'/>" + "<br/>" +
             "<strong>Usage</strong>" + "<br/>" +
@@ -82,13 +41,4 @@ patchPluginXml {
             "<li>1.4: Support memory storage.</li>" +
             "<li>1.5: Support ids xml.</li>" +
             "<li>1.6: Support for order id.</li>\n"
-}
-
-Properties properties = new Properties()
-properties.load(project.file("local.properties").newDataInputStream())
-
-publishPlugin {
-    username = properties.get("username")
-    password = properties.get("password")
-    host = "http://plugins.jetbrains.com"
 }
